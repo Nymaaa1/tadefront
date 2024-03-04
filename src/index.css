@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,8…0,500,600,700,800,900,300italic,400italic,700italic&subset=latin,latin-ext");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap” rel=”stylesheet");
+
+:root {
+  --font-base: "Raleway";
+  --font-secondBase: "Noto";
+  --primary-color: #edf2f8;
+  --secondary-color: #313bac;
+  --black-color: #030303;
+  --lightGray-color: #e4e4e4;
+  --gray-color: #6b7688;
+  --brown-color: #46364a;
+  --white-color: #ffffff;
+  --green-color: #1fd7a0;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
