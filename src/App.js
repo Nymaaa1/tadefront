@@ -26,13 +26,18 @@ function App() {
 }
 
 function PrivateRoute() {
-  const { user, token, removeUserFromLocalStorage } = useAppContext();
-  if (user && token) {
-    const decodedToken = jwtDecode(token);
+  const { removeUserFromLocalStorage } = useAppContext();
+  if (localStorage.getItem("token") && JSON.parse(localStorage.getItem("user"))) {
+    const decodedToken = jwtDecode(localStorage.getItem("token"));
     const tokenExp = new Date(decodedToken.exp * 1000);
     const now = new Date();
     const twelveHoursLater = new Date(now.getTime());
-    if (tokenExp < twelveHoursLater) { removeUserFromLocalStorage(); return <Pages />; } else { return <MainPages />; }
+    if (tokenExp < twelveHoursLater) {
+      removeUserFromLocalStorage();
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      return <Pages />;
+    } else { return <MainPages />; }
   } else {
     return <Pages />;
   }

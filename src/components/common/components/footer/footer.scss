@@ -27,7 +27,7 @@ footer p {
   font-weight: 200;
   font-family: var(--font-base);
   margin: 0 1rem;
-  color: white;
+  color: var(--lightGray-color);
   margin: 20px 0;
   font-size: 14px;
 }
@@ -41,25 +41,34 @@ footer ul {
 footer ul {
   display: block;
   margin-bottom: 20px;
+
+  .li_class {
+    li {
+      font-size: 13px;
+      color: var(--lightGray-color);
+      font-weight: 200;
+      a {
+        color: var(--lightGray-color);
+        &:hover {
+          color: var(--white-color);
+        }
+      }
+
+      &:hover {
+        div {
+          background: var(--secondary-color);
+        }
+      }
+    }
+  }
+
   li {
     margin: 0 1rem;
     cursor: pointer;
     padding-top: 20px;
     flex-direction: column;
     font-size: 14px;
-    a {
-      font-weight: 200;
-      color: var(--primary-color);
-      &:hover {
-        color: var(--secondary-color);
-      }
-    }
-
-    &:hover {
-      div {
-        background: var(--secondary-color);
-      }
-    }
+    color: var(--white-color);
   }
 }
 .legal {

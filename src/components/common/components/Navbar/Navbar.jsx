@@ -26,7 +26,9 @@ const Navbar = () => {
       {!showLoginPopup && (
         <>
           <div className="app__navbar-logo">
-            <img src={images.mainLogo} alt="logo" />
+            <Link to="/group">
+              <img src={images.mainLogo} alt="" />
+            </Link>
           </div>
           <ul className="app__navbar-links">
             {nav.map((list, index) => (

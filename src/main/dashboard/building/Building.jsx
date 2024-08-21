@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Building = () => {
+  const { logoutUser, user } = useAppContext();
   const location = useLocation();
   const id = location.state ? location.state.id : null;
   const sCode = location.state ? location.state.sCode : null;
@@ -16,19 +17,20 @@ const Building = () => {
     getContruction,
     isLoading,
     contruction,
-    message,
-    alertMessage,
+    responseMessage,
+    responseStatus,
+    showAlert,
+    clearAllAlert,
   } = useAppContext();
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getContruction(id, sCode);
+    const fetchData = () => {
+      clearAllAlert();
+      getContruction(id, sCode);
     };
-    if (!isLoading) {
-        showToastMessage(message, alertMessage);
-      }
+    showAlert && showToastMessage(responseMessage, responseStatus);
     fetchData();
-  }, []);
+  }, [showAlert]);
 
   const showToastMessage = (message, type) => {
     if (type === "error") {
@@ -61,13 +63,22 @@ const Building = () => {
                 to={"/dashboard/order"}
                 state={{ id: id, sCode: sCode, cCode: about.cCode }}
               >
-                <img src={images.about} />
+                <img src={id == 1 ? images.huhsuvd9 : images.apartm8} />
               </NavLink>
               <h2 className="bold-text" style={{ marginTop: 20 }}>
                 {about.name}
               </h2>
             </motion.div>
           ))}
+          {/* {user.role === "ADMIN" || user.role === "MANAGER" ? */}
+          <NavLink
+            to={"/dashboard/createBuilding"}
+            state={{ navid: id, navsCode: sCode }}
+          >
+            <button className="fab4">+</button>
+          </NavLink>
+          {/* : null
+          } */}
         </div>
       )}
     </>

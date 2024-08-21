@@ -4,15 +4,18 @@ import { useAppContext } from "../../../api/appContext";
 import Loader from "../../../widget/Spinner";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./CreateOrder.scss";
+import Message from "../../../widget/Message";
 
 const CreateOrder = ({ onClose, state }) => {
   const {
     user,
     createOrder,
     isLoading,
+    showAlert,
+    clearAllAlert,
   } = useAppContext();
   const [newRowData, setNewRowData] = useState([]);
   const { navid, navsCode, navcCode } = state;
@@ -40,7 +43,7 @@ const CreateOrder = ({ onClose, state }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [showAlert]);
 
   const handleEdit = (oCode, field, value) => {
     const newData = newRowData.map((item) => {
@@ -52,7 +55,7 @@ const CreateOrder = ({ onClose, state }) => {
     setNewRowData(newData);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const { name, size, count } = newRowData[0];
     if (!name || !size || !count) {
@@ -76,7 +79,8 @@ const CreateOrder = ({ onClose, state }) => {
       cCode: navcCode,
       imageUrl: null,
     };
-    createOrder(orderData);
+    clearAllAlert();
+    await createOrder(orderData);
     onClose();
   };
 
@@ -92,6 +96,7 @@ const CreateOrder = ({ onClose, state }) => {
 
   return (
     <>
+      {showAlert && <Message />}
       <div className="create-order">
         <div className="create-order-content">
           {isLoading ? (
@@ -100,7 +105,6 @@ const CreateOrder = ({ onClose, state }) => {
             </div>
           ) : (
             <>
-              <ToastContainer />
               <form onSubmit={onSubmit}>
                 <div className="main">
                   <div className="order-containers">

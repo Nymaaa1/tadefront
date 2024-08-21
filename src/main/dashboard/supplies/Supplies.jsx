@@ -11,7 +11,7 @@ const Supplies = () => {
     {
       title: "Хангамж",
       description: "",
-      imgUrl: images.about,
+      imgUrl:id==1?images.huhsuvd4: images.apartm8,
       href: "/dashboard/building",
       sCode: 1,
     },
@@ -33,7 +33,7 @@ const Supplies = () => {
               className="app__profile-items"
               key={about.title + index}
             >
-              <NavLink to={about.href} state={{ id: id, sCode: about.sCode }}>
+              <NavLink to={about.href} state={{ id: id, sCode: id }}>
                 <img src={about.imgUrl} alt={about.title} />
               </NavLink>
               <h2 className="bold-text" style={{ marginTop: 20 }}>

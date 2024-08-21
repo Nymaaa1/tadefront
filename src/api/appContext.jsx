@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import axios from "axios";
 import {
   CLEAR_ALERT,
@@ -19,6 +19,10 @@ import {
   EDIT_ORDER_BEGIN,
   EDIT_ORDER_SUCCESS,
   EDIT_ORDER_ERROR,
+  CONTRUCTION_CREATE_BEGIN,
+  CONTRUCTION_CREATE_SUCCESS,
+  CONTRUCTION_CREATE_ERROR,
+  CLEAR_ALL_ALERT,
 } from "./actions";
 import reducer from "./reducer";
 
@@ -38,8 +42,11 @@ const initialState = {
   alertMessage: "",
   contruction: [],
   order: [],
-  baseURL: "https://tade.mn:443",
+  // baseURL: "https://tade.mn:443",
+  baseURL: "http://localhost:4000",
   pageInfo: {},
+  responseMessage: "",
+  responseStatus: "",
 };
 
 const AppContext = createContext();
@@ -54,14 +61,14 @@ const AppProvider = ({ children }) => {
   //   agent: false,
   // });
 
-  const authFetch = axios.create({
-    baseURL: "http://tade.mn:443",
-    responseType: "json",
-    withCredentials: true,
-    // httpsAgent: new https.Agent({
-    //   rejectUnauthorized: false,
-    // }),
-  });
+  // const authFetch = axios.create({
+  //   baseURL: "http://tade.mn:443",
+  //   responseType: "json",
+  //   withCredentials: true,
+  //   // httpsAgent: new https.Agent({
+  //   //   rejectUnauthorized: false,
+  //   // }),
+  // });
 
   // request Interceptors: https://axios-http.com/docs/interceptors
   // authFetch.interceptors.request.use(
@@ -93,10 +100,15 @@ const AppProvider = ({ children }) => {
     dispatch({ type: DISPLAY_ALERT });
     clearAlert();
   };
+
   const clearAlert = () => {
     setTimeout(() => {
       dispatch({ type: CLEAR_ALERT });
     }, 3000);
+  };
+
+  const clearAllAlert = () => {
+    dispatch({ type: CLEAR_ALL_ALERT });
   };
 
   // ----------Local Storage-------------------------------------------------------------------------------- //
@@ -125,14 +137,12 @@ const AppProvider = ({ children }) => {
           payload: { user, token },
         });
         addUserToLocalStorage({ user, token });
-        clearAlert();
       })
       .catch((error) => {
         dispatch({
           type: LOGIN_USER_ERROR,
-          payload: { msg: error.response.data.message },
+          payload: { message: error.response.data.message },
         });
-        clearAlert();
       });
   };
 
@@ -153,18 +163,18 @@ const AppProvider = ({ children }) => {
           },
         }
       );
-      const contruction = response.data.data;
+      const contructions = response.data.data;
       dispatch({
         type: CONTRUCTION_SUCCESS,
-        payload: { contruction },
+        payload: { contructions },
       });
     } catch (error) {
       dispatch({
         type: CONTRUCTION_ERROR,
-        payload: { msg: error.response.data.message },
+        payload: { message: error.response.data.message },
       });
     }
-    clearAlert();
+    // clearAlert();
   };
 
   //----------------Захиалгын мэдээлэл---------------------------------------------------------//
@@ -188,10 +198,10 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       dispatch({
         type: GET_ORDER_ERROR,
-        payload: { msg: error.response.data.message },
+        payload: { message: error.response.data.message },
       });
+      // clearAlert();
     }
-    clearAlert();
   };
 
   //----------------Захиалгын мэдээлэл хадгалах---------------------------------------------------------//
@@ -218,8 +228,8 @@ const AppProvider = ({ children }) => {
         type: CREATE_ORDER_ERROR,
         payload: { message: error.response.data.message },
       });
+      // clearAlert();
     }
-    clearAlert();
   };
 
   //----------------Захиалгын мэдээлэл засах---------------------------------------------------------//
@@ -236,18 +246,17 @@ const AppProvider = ({ children }) => {
           },
         }
       );
-      const message = response.data.message;
       dispatch({
         type: EDIT_ORDER_SUCCESS,
-        payload: { message },
+        payload: { message: response.data.message },
       });
     } catch (error) {
       dispatch({
         type: EDIT_ORDER_ERROR,
         payload: { message: error.response.data.message },
       });
+      // clearAlert();
     }
-    clearAlert();
   };
 
   //----------------Зураг хагалах---------------------------------------------------------//
@@ -274,8 +283,36 @@ const AppProvider = ({ children }) => {
         type: EDIT_ORDER_ERROR,
         payload: { message: error.response.data.message },
       });
+      // clearAlert();
     }
-    clearAlert();
+  };
+
+  //----------------Building мэдээлэл хадгалах---------------------------------------------------------//
+
+  const createBuilding = async (buildingData) => {
+    dispatch({ type: CONTRUCTION_CREATE_BEGIN });
+    try {
+      const response = await axios.post(
+        `${state.baseURL}/v1/contruction`,
+        buildingData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const message = response.data.message;
+      dispatch({
+        type: CONTRUCTION_CREATE_SUCCESS,
+        payload: { message },
+      });
+    } catch (error) {
+      dispatch({
+        type: CONTRUCTION_CREATE_ERROR,
+        payload: { message: error.response.data.message },
+      });
+      // clearAlert();
+    }
   };
 
   //------------authentication--------------------------------------------------------------------//
@@ -306,6 +343,8 @@ const AppProvider = ({ children }) => {
         editOrder,
         imageUpload,
         removeUserFromLocalStorage,
+        createBuilding,
+        clearAllAlert,
       }}
     >
       {children}

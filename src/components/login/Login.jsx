@@ -4,8 +4,7 @@ import { GoX } from "react-icons/go";
 import { images } from "../main/constants";
 import { useAppContext } from "../../api/appContext";
 import Loader from "../../widget/Spinner";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Message from "../../widget/Message";
 
 const initialState = {
   email: "",
@@ -18,8 +17,8 @@ const LoginPopup = ({ onClose }) => {
     user,
     loginUser,
     isLoading,
-    message,
-    alertMessage,
+    showAlert,
+    clearAllAlert,
   } = useAppContext();
   const handleLoginFormSubmit = (e) => {
     e.preventDefault();
@@ -32,15 +31,9 @@ const LoginPopup = ({ onClose }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const { email, password } = values;
-    if (!email || !password) {
-      showToastMessage("Утга оруулна уу!", "warning");
-      return;
-    }
     const currentUser = { email, password };
+    clearAllAlert();
     loginUser(currentUser);
-    if (!isLoading) {
-      showToastMessage(message, alertMessage);
-    }
   };
 
   useEffect(() => {
@@ -53,19 +46,9 @@ const LoginPopup = ({ onClose }) => {
     navigateToDashboard();
   }, [user, onClose]);
 
-  const showToastMessage = (message, type) => {
-    if (type === "error") {
-      toast.error(message);
-    } else if (type === "success") {
-      toast.success(message);
-    } else if (type === "warning") {
-      toast.warning(message);
-    }
-  };
-
   return (
     <div className="login-popup-container">
-      <ToastContainer />
+      {showAlert && <Message />}
       <div className="login-popup-content">
         {isLoading ? (
           <div className="loading">

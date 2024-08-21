@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { GoX } from "react-icons/go";
 import { useAppContext } from "../../../api/appContext";
-import { toast } from "react-toastify";
 import Loader from "../../../widget/Spinner";
 import { images } from "../../../components/main/constants";
 import "./Upload.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UploadPhoto = ({ onClose, state }) => {
-  const { imageUpload, isLoading } = useAppContext();
+  const { imageUpload, isLoading, clearAllAlert } = useAppContext();
   const [selectedFile, setSelectedFile] = useState(null);
   const { navid, navsCode, navcCode, navoCode, imageUrl } = state;
 
@@ -22,7 +23,7 @@ const UploadPhoto = ({ onClose, state }) => {
       ) {
         setSelectedFile(file);
       } else {
-        toast.error("Please select a PNG or JPG image.");
+        toast.warning("Зураг оруулна уу!");
         event.target.value = null;
       }
     }
@@ -37,16 +38,18 @@ const UploadPhoto = ({ onClose, state }) => {
       formData.append("id", navid);
       formData.append("cCode", navcCode);
       formData.append("oCode", navoCode);
+      clearAllAlert();
       imageUpload(formData);
       setSelectedFile(null);
       onClose();
     } else {
-      toast.error("Please select an image to upload.");
+      toast.warning("Зураг оруулна уу!");
     }
   };
 
   return (
     <>
+      <ToastContainer />
       {isLoading ? (
         <div className="loading">
           <Loader isLoading={isLoading} />

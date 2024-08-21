@@ -1,0 +1,113 @@
+.apartment {
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+
+.apartment_hero {
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  // background-position: center;
+  background-attachment: fixed;
+  height: 80vh;
+  width: 100%;
+  overflow: hidden;
+  background-image: url("../../components/main/assets/apartment/apartment7.webp");
+
+  .content {
+    // position: relative;
+    // z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    // align-self: start;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+
+    h1 {
+      font-size: 40px;
+      color: #fff;
+    }
+
+    .solid-divider {
+      height: 2px;
+      width: 50%;
+      background-color: #fff;
+      margin: 0px 0;
+    }
+  }
+}
+
+.about_apart {
+  background-color: #fff;
+  margin-bottom: 80px;
+}
+
+.about_apart .heading {
+  text-align: left;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.about_apart p {
+  font-size: 15px;
+  padding-right: 30px;
+  margin-bottom: 20px;
+  line-height: 30px;
+}
+
+.about_apart .container img {
+  width: 100%;
+  max-width: 200px;
+  margin-top: 20px;
+}
+
+.about_apart .containers img {
+  width: 100%;
+  max-width: 2000px;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .about_apart .container {
+    flex-direction: column;
+  }
+  .about_apart .containers {
+    flex-direction: column;
+  }
+
+  .about_apart p {
+    padding: 0;
+  }
+
+  .about_apart .container img {
+    width: 100%;
+    max-width: 100px;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+  }
+  .hero {
+    display: flex;
+    width: 100%;
+    object-fit: initial;
+    background-position: 0%;
+  }
+  .apartment_hero {
+    // height: 50vh;
+    // width: 100%;
+    background-position: center;
+    .content {
+      .solid-divider {
+        display: none;
+      }
+      .h1 {
+        font-size: 10px;
+      }
+    }
+  }
+}

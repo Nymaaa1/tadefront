@@ -42,115 +42,166 @@ import {
   EDIT_ORDER_BEGIN,
   EDIT_ORDER_SUCCESS,
   EDIT_ORDER_ERROR,
+  CONTRUCTION_CREATE_BEGIN,
+  CONTRUCTION_CREATE_SUCCESS,
+  CONTRUCTION_CREATE_ERROR,
+  CLEAR_ALL_ALERT,
 } from "./actions";
 import { initialState } from "./appContext";
 
 const reducer = (state, action) => {
-  if (action.type === EDIT_ORDER_BEGIN) {
-    return {
-      ...state,
-      isLoading: true,
-    };
+  switch (action.type) {
+    case CLEAR_ALL_ALERT:
+      return {
+        ...state,
+        showAlert: false,
+        isLoading: false,
+        responseMessage: "",
+        responseStatus: "",
+        contruction: [],
+        order: [],
+      };
+    case LOGIN_USER_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        responseMessage: action.payload.message,
+        responseStatus: "error",
+      };
+    case LOGIN_USER_BEGIN:
+      return {
+        ...state,
+        isLoading: true,
+        showAlert: false,
+      };
+    case LOGIN_USER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        token: action.payload.token,
+        user: action.payload.user,
+        responseMessage: "Амжилттай нэвтэрлээ...",
+        responseStatus: "success",
+      };
+    case CONTRUCTION_CREATE_BEGIN:
+      return {
+        ...state,
+        showAlert: false,
+        isLoading: true,
+      };
+    case CONTRUCTION_CREATE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        responseStatus: "success",
+        responseMessage: "Амжилттай хадгаллаа",
+      };
+    case CONTRUCTION_CREATE_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertMessage: "error",
+        message: action.payload.message,
+      };
+    case EDIT_ORDER_BEGIN:
+      return {
+        ...state,
+        showAlert: false,
+        isLoading: true,
+      };
+    case EDIT_ORDER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        responseStatus: "success",
+        responseMessage: action.payload.message,
+      };
+    case EDIT_ORDER_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertMessage: "error",
+        message: action.payload.message,
+      };
+    case CREATE_ORDER_BEGIN:
+      return {
+        ...state,
+        showAlert: false,
+        isLoading: true,
+      };
+    case CREATE_ORDER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        responseStatus: "success",
+        responseMessage: "Амжилттай бүртгэгдлээ",
+      };
+    case CREATE_ORDER_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertMessage: "error",
+        message: action.payload.message,
+      };
+    case GET_ORDER_BEGIN:
+      return {
+        ...state,
+        showAlert: false,
+        isLoading: true,
+      };
+    case GET_ORDER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: false,
+        order: action.payload.order,
+        pageInfo: action.payload.pageInfo,
+        responseStatus: "success",
+        responseMessage: "Амжилттай",
+      };
+    case GET_ORDER_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertMessage: "error",
+        message: action.payload.message,
+      };
+    case CONTRUCTION_BEGIN:
+      return {
+        ...state,
+        showAlert: false,
+        isLoading: true,
+      };
+    case CONTRUCTION_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: false,
+        contruction: action.payload.contructions,
+        responseStatus: "success",
+        responseMessage: "Амжилттай",
+      };
+    case CONTRUCTION_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertMessage: "error",
+        message: action.payload.message,
+      };
+    default:
+      return state;
   }
-  if (action.type === EDIT_ORDER_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      message: action.payload.message,
-      showAlert: true,
-      alertType: "success",
-      alertText: "Амжилттай засагдлаа",
-    };
-  }
-  if (action.type === EDIT_ORDER_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "error",
-      alertText: action.payload.message,
-    };
-  }
-  if (action.type === CREATE_ORDER_BEGIN) {
-    return {
-      ...state,
-      isLoading: true,
-    };
-  }
-  if (action.type === CREATE_ORDER_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      message: action.payload.message,
-      showAlert: true,
-      alertType: "success",
-      alertText: "Амжилттай бүртгэгдлээ...",
-    };
-  }
-  if (action.type === CREATE_ORDER_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "error",
-      alertText: action.payload.message,
-    };
-  }
-  if (action.type === GET_ORDER_BEGIN) {
-    return {
-      ...state,
-      isLoading: true,
-    };
-  }
-  if (action.type === GET_ORDER_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      order: action.payload.order,
-      showAlert: true,
-      pageInfo: action.payload.pageInfo,
-      alertType: "success",
-      alertText: "Амжилттай нэвтэрлээ...",
-    };
-  }
-  if (action.type === GET_ORDER_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: action.payload.message,
-      message: action.payload.msg,
-      alertMessage: "warning",
-    };
-  }
-  if (action.type === CONTRUCTION_BEGIN) {
-    return {
-      ...state,
-      isLoading: true,
-    };
-  }
-  if (action.type === CONTRUCTION_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      contruction: action.payload.contruction,
-      showAlert: true,
-      alertType: "success",
-      alertText: "Амжилттай нэвтэрлээ...",
-    };
-  }
-  if (action.type === CONTRUCTION_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: action.payload.message,
-      message: action.payload.msg,
-      alertMessage: "warning",
-    };
-  }
+
   if (action.type === DISPLAY_ALERT) {
     return {
       ...state,
@@ -165,6 +216,7 @@ const reducer = (state, action) => {
       showAlert: false,
       alertType: "",
       alertText: "",
+      message: "",
     };
   }
 
@@ -210,22 +262,19 @@ const reducer = (state, action) => {
       token: action.payload.token,
       user: action.payload.user,
       showAlert: true,
-      alertType: "success",
-      alertText: "Амжилттай нэвтэрлээ...",
+      message: "Амжилттай нэвтэрлээ...",
       alertMessage: "success",
     };
   }
-  if (action.type === LOGIN_USER_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: action.payload.msg,
-      message: action.payload.msg,
-      alertMessage: "error",
-    };
-  }
+  // if (action.type === LOGIN_USER_ERROR) {
+  //   return {
+  //     ...state,
+  //     isLoading: false,
+  //     showAlert: true,
+  //     message: action.payload.message,
+  //     alertMessage: "error",
+  //   };
+  // }
 
   if (action.type === UPDATE_USER_BEGIN) {
     return { ...state, isLoading: true };

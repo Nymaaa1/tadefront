@@ -7,7 +7,8 @@ import Supplies from "./supplies/Supplies.jsx";
 import Building from "./building/Building.jsx";
 import Order from "./order/Order.jsx";
 import NotFound from "../../widget/NotFound.jsx";
-import ExcelToJsonConverter from "./excel/Excel.jsx"
+import ExcelToJsonConverter from "./excel/Excel.jsx";
+import CreateBuilding from "./building/CreateBuilding.jsx";
 
 const MainPages = () => {
   return (
@@ -19,6 +20,7 @@ const MainPages = () => {
         <Route path="/building" element={<Building />} />
         <Route path="/order" element={<Order />} />
         <Route path="/excel" element={<ExcelToJsonConverter />} />
+        <Route path="/createBuilding" element={<CreateBuilding />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
@@ -26,4 +28,3 @@ const MainPages = () => {
 };
 
 export default MainPages;
-

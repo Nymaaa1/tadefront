@@ -3,50 +3,51 @@ import { motion } from "framer-motion";
 import "./About.scss";
 import { images } from "../../constants";
 import { Link } from "react-router-dom";
+import { AppWrapAbout, MotionWrap } from "../../../main/wrapper";
 
 const About = () => {
   const abouts = [
     {
-      title: "ТИ ЭЙ ДИ И КОНСТРАКШН",
-      description: "Төсөл",
-      imgUrl: images.about,
+      title: "TADE APARTMENT",
+      description: "Компани",
+      imgUrl: images.tadeApartment,
+      href: "/group/apartment",
+    },
+    {
+      title: "TADE TRADE",
+      description: "Компани",
+      imgUrl: images.tadeTrade,
+      href: "/group",
+    },
+    {
+      title: "TADE WINDOW",
+      description: "Компани",
+      imgUrl: images.tadeWindow,
+      href: "/group/window",
+    },
+    {
+      title: "TADE CONTRUCTION",
+      description: "Компани",
+      imgUrl: images.tadeContruction,
       href: "/group/huhsuvd",
-    },
-    {
-      title: "Цонх",
-      description: "Im good",
-      imgUrl: images.about02,
-      href: "/",
-    },
-    {
-      title: "Гадаад",
-      description: "Im good",
-      imgUrl: images.about02,
-      href: "/",
-    },
-    {
-      title: "Дотоод",
-      description: "Im good",
-      imgUrl: images.about02,
-      href: "/",
     },
   ];
 
   return (
     <>
       <div className="background">
+        <div className="padd"></div>
         <h2 className="head-text-second">
-        ТИ ЭЙ ДИ И <span>КОНСТРАКШН</span> <br />
-          Хийгдэж буй <span>Төслүүд</span>
+          ТИ ЭЙ ДИ И <span>ГРУПП</span> <br />
         </h2>
 
-        <div className="app__profiles">
+        <div className="app__profileabout">
           {abouts.map((about, index) => (
             <motion.div
               whileInView={{ opacity: 1 }}
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.5, type: "tween" }}
-              className="app__profile-item"
+              className="app__profile-item_about"
               key={about.title + index}
             >
               <Link to={about.href}>
@@ -66,9 +67,8 @@ const About = () => {
   );
 };
 
-export default About;
-// export default AppWrap(
-//   MotionWrap(About, "app__about"),
-//   "about",
-//   "app__whitebg"
-// );
+export default AppWrapAbout(
+  MotionWrap(About, "app__wrapper_about_screen"),
+  "about",
+  ""
+);

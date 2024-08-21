@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import UploadPhoto from "./UploadPhoto";
 import "react-toastify/dist/ReactToastify.css";
 import "./Order.scss";
+import Message from "../../../widget/Message";
 
 const Order = () => {
   const location = useLocation();
@@ -19,8 +20,8 @@ const Order = () => {
     order,
     editOrder,
     pageInfo,
-    alertMessage,
-    message,
+    showAlert,
+    clearAllAlert,
   } = useAppContext();
   const [showPopup, setShowPopup] = useState(false);
   const [showPopupPhoto, setShowPopupPhoto] = useState(false);
@@ -33,11 +34,9 @@ const Order = () => {
   const [oCode, setoCode] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
-  const fetchData = async () => {
-    await getOrder({ id, sCode, cCode, page: currentPage });
-    if (!isLoading) {
-      showToastMessage(message, alertMessage);
-    }
+  const fetchData = () => {
+    clearAllAlert();
+    getOrder({ id, sCode, cCode, page: currentPage });
   };
 
   useEffect(() => {
@@ -48,9 +47,8 @@ const Order = () => {
     if (!isLoading && order) {
       setData(order.map((row) => ({ ...row, isEdited: false })));
       setPageInfos(pageInfo);
-      showToastMessage(message, alertMessage);
     }
-  }, [isLoading, order, alertMessage, message, pageInfo]);
+  }, [isLoading, order, pageInfo]);
 
   const handleLoginClick = () => {
     setShowPopup(true);
@@ -62,12 +60,11 @@ const Order = () => {
   };
 
   const handleCloseLoginPopup = async () => {
-    setShowPopup(false);
-    showToastMessage("Амжилттай хадгаллаа...", "success");
-    await fetchData();
+    fetchData();
     if (!isLoading && order) {
       setData(order.map((row) => ({ ...row, isEdited: false })));
     }
+    setShowPopup(false);
   };
 
   const handleUpload = () => {
@@ -103,7 +100,14 @@ const Order = () => {
     } else {
       newData = data.map((item) => {
         if (item.oCode === oCode) {
-          return { ...item, [field]: value, isEdited: true };
+          const now = new Date();
+          const itemOrderDate = new Date(item.orderDate);
+          itemOrderDate.setDate(itemOrderDate.getDate() + 7);
+          if (itemOrderDate > now) {
+            return { ...item, [field]: value, isEdited: true };
+          } else {
+            showToastMessage("Захиалга засах өдөр дууссан", "warning");
+          }
         }
         return item;
       });
@@ -115,8 +119,7 @@ const Order = () => {
     const editedData = data.filter((item) => item.isEdited);
     if (editedData.length > 0) {
       await editOrder(editedData);
-      await fetchData();
-      showToastMessage("Захиалга засагдлаа", "success");
+      fetchData();
       if (!isLoading && order) {
         setData(order.map((row) => ({ ...row, isEdited: false })));
       }
@@ -141,6 +144,7 @@ const Order = () => {
 
   return (
     <>
+      {showAlert && <Message />}
       <ToastContainer />
       {isLoading ? (
         <div className="loading">

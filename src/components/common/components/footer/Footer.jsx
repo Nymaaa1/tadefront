@@ -1,6 +1,6 @@
 import React from "react";
 import { footer } from "../../../data/Data";
-import "./footer.scss";
+import "./Footer.scss";
 import { Link } from "react-router-dom";
 import { images } from "../../../main/constants";
 
@@ -22,6 +22,11 @@ const Footer = () => {
                 байгуулагдсан ба МУ-н Барилга хот байгуулалтын яамнаас олгосон
                 тусгай зөвшөөрлийн хүрээнд барилгын засвар, гадаад худалдаа,
                 интерьер дизайны чиглэлээр үйл ажиллагаа явуулдаг компани юм. ​
+                Манай баг хамт олон нь Иргэний ба үйлдвэрийн барилгын мэргэшсэн
+                инженер гурав, Инженер техникийн ажилчид зургаа, ерөнхий
+                менежер, нярав, засал, арматур, мужаан, туслах 20-н
+                ажилтантайгаар нийт 31 хүний бүрэлдэхүүнтэйгээр үйл ажиллагаа
+                явуулж байна. ​
               </p>
             </div>
           </div>
@@ -29,11 +34,17 @@ const Footer = () => {
             <div className="box">
               <ul>
                 <li>{val.title}</li>
-                {val.text.map((list) => (
-                  <li>
-                    <Link to={list.url}>{list.list}</Link>
-                  </li>
-                ))}
+                <div className="li_class">
+                  {val.text.map((list) => (
+                    <li>
+                      {list.url === null ? (
+                        list.list
+                      ) : (
+                        <Link to={list.url}>{list.list}</Link>
+                      )}
+                    </li>
+                  ))}
+                </div>
               </ul>
             </div>
           ))}

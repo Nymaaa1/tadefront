@@ -6,8 +6,8 @@ export default function NotFound() {
     <div class="error-container">
       <div class="error-box">
         <h1>404</h1>
-        <p>Oops! Page not found.</p>
-        <NavLink to="/">Go back to homepage</NavLink>
+        <p>Хуудас олдсонгүй</p>
+        <NavLink to="/">Буцах</NavLink>
       </div>
     </div>
   );

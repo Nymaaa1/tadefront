@@ -54,7 +54,7 @@ const MainNavBar = () => {
               <DropdownItem
                 icon={<RiLogoutCircleLine />}
                 text={"Гарах"}
-                onClick={handleLogout}
+                click={handleLogout}
               />
             </ul>
           </div>
@@ -64,11 +64,11 @@ const MainNavBar = () => {
   );
 };
 
-function DropdownItem({ icon, text, onClick }) {
+function DropdownItem({ icon, text, click }) {
   return (
     <li className="dropdownItem">
       {icon}
-      <a onClick={onClick}>{text}</a>
+      <a onClick={click}>{text}</a>
     </li>
   );
 }

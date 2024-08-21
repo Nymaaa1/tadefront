@@ -37,7 +37,9 @@ const Contact = () => {
               scrolling="no"
               marginHeight="0"
               marginWidth="0"
-              src="https://maps.google.com/maps?width=100%25&amp;height=520&amp;hl=en&amp;q=WVG9+7PW,%20Ulaanbaatar%2016090+(Tade%20Contruction)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+              //https://maps.google.com/maps?width=100%25&amp;height=520&amp;hl=en&amp;q=WVG9+7PW,%20Ulaanbaatar%2016090+(Tade%20Contruction)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed
+              //https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4323.19984365097!2d106.87318602759974!3d47.92376919099215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5d96938d7cc24417%3A0xba0d2fcff7e26401!2z0KXTqdGFINGB0YPQstC0!5e0!3m2!1sen!2smn!4v1710672071150!5m2!1sen!2smn
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4323.19984365097!2d106.87318602759974!3d47.92376919099215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5d96938d7cc24417%3A0xba0d2fcff7e26401!2z0KXTqdGFINGB0YPQstC0!5e0!3m2!1sen!2smn!4v1710672071150!5m2!1sen!2smn"
             ></iframe>
           </div>
         </div>
@@ -76,7 +78,7 @@ const Contact = () => {
                 <h3>Емэйл</h3>
               </div>
             </div>
-            <h5>general@tade.mn</h5>
+            <h5>Tade@tade.mn</h5>
           </div>
         </div>
       </div>
