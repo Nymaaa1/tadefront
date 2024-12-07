@@ -11,7 +11,7 @@ const Supplies = () => {
     {
       title: "Хангамж",
       description: "",
-      imgUrl:id==1?images.huhsuvd4: images.apartm8,
+      imgUrl: id == 1 ? images.huhsuvd4 : images.apartm8,
       href: "/dashboard/building",
       sCode: 1,
     },
